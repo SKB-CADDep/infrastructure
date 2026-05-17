@@ -146,3 +146,46 @@ affinity:
           matchLabels:
             app: test-app
         topologyKey: kubernetes.io/hostname
+
+configmap:
+  enabled: true
+  data:
+    APP_ENV: "production"
+    DATABASE_URL: "postgres://user:password@hostname:5432/dbname"
+
+secret:
+  enabled: true
+  data:
+    DB_PASSWORD: "secret-123"
+
+networkpolicy:
+  enabled: true
+  spec:
+    podSelector:
+      matchLabels:
+        app: test-app
+    policyTypes:
+      - Ingress
+      - Egress
+    ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 80
+    egress:
+      - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: postgres
+          podSelector:
+            matchLabels:
+              kubernetes.io/name: postgresql
+        ports:
+          - protocol: TCP
+            port: 5432

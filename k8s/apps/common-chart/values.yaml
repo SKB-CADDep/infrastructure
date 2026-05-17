@@ -56,3 +56,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+configmap:
+  enabled: false
+
+secret:
+  enabled: false
+
+networkpolicy:
+  enabled: false
