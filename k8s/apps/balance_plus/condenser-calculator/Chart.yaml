@@ -1,0 +1,6 @@
+apiVersion: v2
+name: condenser-calculator
+description: A Helm chart for condenser-calculator service
+type: application
+version: 2.0.0
+appVersion: "1.0.0"
