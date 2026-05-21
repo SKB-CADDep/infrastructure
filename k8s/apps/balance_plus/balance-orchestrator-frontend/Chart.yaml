@@ -1,0 +1,6 @@
+apiVersion: v2
+name: balance-orchestrator-frontend
+description: A Helm chart for balance-orchestrator-frontend service
+type: application
+version: 2.0.0
+appVersion: "1.0.0"
