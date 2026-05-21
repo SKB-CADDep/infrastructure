@@ -1,0 +1,31 @@
+---
+releases:
+  - name: balance-orchestrator
+    namespace: balance_plus
+    chart: ./balance-orchestrator
+    values:
+      - ./balance-orchestrator/values.yaml
+
+  - name: balance-orchestrator-frontend
+    namespace: balance_plus
+    chart: ./balance-orchestrator-frontend
+    values:
+      - ./balance-orchestrator-frontend/values.yaml
+
+  - name: valve-stems
+    namespace: balance_plus
+    chart: ./valve-stems
+    values:
+      - ./valve-stems/values.yaml
+
+  - name: valve-stems-frontend
+    namespace: balance_plus
+    chart: ./valve-stems-frontend
+    values:
+      - ./valve-stems-frontend/values.yaml
+
+  - name: condenser-calculator
+    namespace: balance_plus
+    chart: ./condenser-calculator
+    values:
+      - ./condenser-calculator/values.yaml
