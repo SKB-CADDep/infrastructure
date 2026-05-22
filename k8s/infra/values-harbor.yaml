@@ -1,0 +1,48 @@
+expose:
+  tls:
+    enabled: false
+  type: nodePort
+  nodePort:
+    ports:
+      http:
+        port: 80
+        nodePort: 30002
+externalURL: http://192.168.49.2:30002
+harborAdminPassword: admin
+persistence:
+  enabled: true
+  storageClass: standard
+  persistentVolumeClaim:
+    registry:
+      size: 5Gi
+    jobservice:
+      size: 1Gi
+    trivy:
+      size: 1Gi
+database:
+  type: external
+  external:
+    host: postgres-postgresql.postgres.svc.cluster.local
+    port: 5432
+    username: sasha
+    password: secret-123
+    dbname: registry
+    sslmode: disable
+redis:
+  type: external
+  external:
+    addr: redis-master.redis.svc.cluster.local:6379
+    password: admin
+trivy:
+  enabled: false
+registry:
+  enabled: true
+  initContainers:
+    - name: init-registry
+      image: busybox
+      securityContext:
+        runAsUser: 0
+      command: ["sh", "-c", "mkdir -p /storage && chown -R 10000:10000 /storage"]
+      volumeMounts:
+        - name: registry-data
+          mountPath: /storage
