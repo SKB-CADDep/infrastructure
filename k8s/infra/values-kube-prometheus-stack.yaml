@@ -1,0 +1,7 @@
+grafana:
+  adminPassword: admin
+prometheus:
+  prometeheusSpec:
+    retention: 1d
+alertmanager:
+  enabled: false
