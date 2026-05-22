@@ -1,0 +1,15 @@
+auth:
+  password: admin
+master:
+  persistence:
+    enabled: false
+replica:
+  replicaCount: 0
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+service:
+  type: ClusterIP
