@@ -27,5 +27,7 @@ controller:
   healthStatus: true
 rbac:
   create: true
+  clusterrole:
+    create: true
 prometheus:
   create: true
