@@ -1,0 +1,31 @@
+controller:
+  replicaCount: 3
+  ingressClass:
+    name: nginx
+    create: true
+  service:
+    type: NodePort
+    externalTrafficPolicy: Local
+    httpPort:
+      nodePort: 30080
+    httpsPort:
+      nodePort: 30443
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  config:
+    entries:
+      use-proxy-protocol: "false"
+      use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+      enable-real-ip: "true"
+      log-format-escape-json: "true"
+  healthStatus: true
+rbac:
+  create: true
+prometheus:
+  create: true
