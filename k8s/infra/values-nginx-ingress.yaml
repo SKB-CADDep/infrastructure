@@ -31,3 +31,7 @@ rbac:
     create: true
 prometheus:
   create: true
+  service:
+    create: true
+  serviceMonitor:
+    create: false # temporary value
