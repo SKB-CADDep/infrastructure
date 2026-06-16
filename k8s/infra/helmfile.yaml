@@ -1,7 +1,10 @@
 ---
 repositories:
-  - name: nginx-stable
-    url: https://helm.nginx.com/stable
+  # - name: nginx-stable
+  #   url: https://helm.nginx.com/stable
+
+  - name: hashicorp
+    url: https://helm.releases.hashicorp.com
 
   # - name: bitnami
   #   url: https://charts.bitnami.com/bitnami
@@ -13,12 +16,19 @@ repositories:
   #   url: https://prometheus-community.github.io/helm-charts
 
 releases:
-  - name: nginx-ingress
-    namespace: nginx-ingress
-    chart: nginx-stable/nginx-ingress
-    version: 2.5.3
+  # - name: nginx-ingress
+  #   namespace: nginx-ingress
+  #   chart: nginx-stable/nginx-ingress
+  #   version: 2.5.3
+  #   values:
+  #     - values-nginx-ingress.yaml
+
+  - name: vault
+    namespace: vault
+    chart: hashicorp/vault
+    version: 0.32.0
     values:
-      - values-nginx-ingress.yaml
+      - values-vault.yaml
 
   # - name: postgres
   #   namespace: postgres
