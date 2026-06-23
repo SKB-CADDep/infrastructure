@@ -6,6 +6,9 @@ repositories:
   - name: hashicorp
     url: https://helm.releases.hashicorp.com
 
+  - name: external-secrets
+    url: https://charts.external-secrets.io
+
   # - name: bitnami
   #   url: https://charts.bitnami.com/bitnami
 
@@ -29,6 +32,13 @@ releases:
     version: 0.32.0
     values:
       - values-vault.yaml
+
+  - name: external-secrets
+    namespace: external-secrets
+    chart: external-secrets/external-secrets
+    version: 2.6.0
+    values:
+      - values-external-secrets.yaml
 
   # - name: postgres
   #   namespace: postgres
