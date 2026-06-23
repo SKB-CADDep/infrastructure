@@ -32,15 +32,7 @@ server:
     size: 1Gi
     storageClass: standard   # temporary value
   standalone:
-    enabled: true   # temporary value
-  ha:
-    enabled: false   # temporary value
-    replicas: 3
-    raft:
-      enabled: false   # temporary value
-    disruptionBudget:
-      enabled: false   # temporary value
-      maxUnavailable: 1
+    enabled: true
 
 ui:
   enabled: true
