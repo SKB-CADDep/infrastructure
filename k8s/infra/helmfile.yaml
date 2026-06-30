@@ -26,6 +26,13 @@ releases:
   #   values:
   #     - values-nginx-ingress.yaml
 
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: 1.20.3
+    values:
+      - values-cert-manager.yaml
+
   - name: vault
     namespace: vault
     chart: hashicorp/vault
@@ -33,12 +40,12 @@ releases:
     values:
       - values-vault.yaml
 
-  - name: external-secrets
-    namespace: external-secrets
-    chart: external-secrets/external-secrets
-    version: 2.6.0
-    values:
-      - values-external-secrets.yaml
+  # - name: external-secrets
+  #   namespace: external-secrets
+  #   chart: external-secrets/external-secrets
+  #   version: 2.6.0
+  #   values:
+  #     - values-external-secrets.yaml
 
   # - name: postgres
   #   namespace: postgres
