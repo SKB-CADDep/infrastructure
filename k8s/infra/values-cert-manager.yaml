@@ -1,0 +1,6 @@
+crds:
+  enabled: true
+prometheus:
+  enabled: false   # temporary value
+  servicemonitor:
+    enabled: false   # temporary value
