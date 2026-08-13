@@ -1,44 +1,47 @@
 ---
 repositories:
-  # - name: nginx-stable
-  #   url: https://helm.nginx.com/stable
+  - name: nginx-stable
+    url: https://helm.nginx.com/stable
 
-  - name: hashicorp
-    url: https://helm.releases.hashicorp.com
+  # - name: jetstack
+  #   url: https://charts.jetstack.io
 
-  - name: external-secrets
-    url: https://charts.external-secrets.io
+  # - name: hashicorp
+  #   url: https://helm.releases.hashicorp.com
 
-  # - name: bitnami
-  #   url: https://charts.bitnami.com/bitnami
+  # - name: external-secrets
+  #   url: https://charts.external-secrets.io
 
-  # - name: harbor
-  #   url: https://helm.goharbor.io
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+
+  - name: harbor
+    url: https://helm.goharbor.io
 
   # - name: prometheus-community
   #   url: https://prometheus-community.github.io/helm-charts
 
 releases:
-  # - name: nginx-ingress
-  #   namespace: nginx-ingress
-  #   chart: nginx-stable/nginx-ingress
-  #   version: 2.5.3
+  - name: nginx-ingress
+    namespace: nginx-ingress
+    chart: nginx-stable/nginx-ingress
+    version: 2.6.4
+    values:
+      - values-nginx-ingress.yaml
+
+  # - name: cert-manager
+  #   namespace: cert-manager
+  #   chart: jetstack/cert-manager
+  #   version: 1.20.3
   #   values:
-  #     - values-nginx-ingress.yaml
+  #     - values-cert-manager.yaml
 
-  - name: cert-manager
-    namespace: cert-manager
-    chart: jetstack/cert-manager
-    version: 1.20.3
-    values:
-      - values-cert-manager.yaml
-
-  - name: vault
-    namespace: vault
-    chart: hashicorp/vault
-    version: 0.32.0
-    values:
-      - values-vault.yaml
+  # - name: vault
+  #   namespace: vault
+  #   chart: hashicorp/vault
+  #   version: 0.32.0
+  #   values:
+  #     - values-vault.yaml
 
   # - name: external-secrets
   #   namespace: external-secrets
@@ -47,26 +50,26 @@ releases:
   #   values:
   #     - values-external-secrets.yaml
 
-  # - name: postgres
-  #   namespace: postgres
-  #   chart: bitnami/postgresql
-  #   version: 18.5.15
-  #   values:
-  #     - values-postgres.yaml
+  - name: postgres
+    namespace: postgres
+    chart: bitnami/postgresql
+    version: 18.8.8
+    values:
+      - values-postgres.yaml
 
-  # - name: redis
-  #   namespace: redis
-  #   chart: bitnami/redis
-  #   version: 25.3.11
-  #   values:
-  #     - values-redis.yaml
+  - name: redis
+    namespace: redis
+    chart: bitnami/redis
+    version: 28.0.2
+    values:
+      - values-redis.yaml
 
-  # - name: harbor
-  #   namespace: harbor
-  #   chart: harbor/harbor
-  #   version: 1.18.3
-  #   values:
-  #     - values-harbor.yaml
+  - name: harbor
+    namespace: harbor
+    chart: harbor/harbor
+    version: 1.19.2
+    values:
+      - values-harbor.yaml
 
   # - name: kube-prometheus-stack
   #   namespace: monitoring
