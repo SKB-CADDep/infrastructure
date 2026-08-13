@@ -1,13 +1,11 @@
 expose:
   tls:
     enabled: false
-  type: nodePort
-  nodePort:
-    ports:
-      http:
-        port: 80
-        nodePort: 30002
-externalURL: http://192.168.49.2:30002
+  ingress:
+    hosts:
+      core: harbor.local
+    className: nginx
+externalURL: http://harbor.local:30080   # temporary value
 harborAdminPassword: admin
 persistence:
   enabled: true
