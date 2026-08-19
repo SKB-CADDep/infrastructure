@@ -1,11 +1,16 @@
 expose:
   tls:
-    enabled: false
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-tls
   ingress:
     hosts:
       core: harbor.local
     className: nginx
-externalURL: http://harbor.local:30080   # temporary value
+    annotations:
+      nginx.org/client-max-body-size: "0"
+externalURL: https://harbor.local
 harborAdminPassword: admin
 persistence:
   enabled: true
@@ -14,8 +19,6 @@ persistence:
     registry:
       size: 5Gi
     jobservice:
-      size: 1Gi
-    trivy:
       size: 1Gi
 database:
   type: external
