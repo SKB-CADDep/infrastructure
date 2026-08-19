@@ -4,12 +4,14 @@ controller:
     name: nginx
     create: true
   service:
-    type: NodePort
+    type: LoadBalancer
     externalTrafficPolicy: Local
     httpPort:
-      nodePort: 30080
+      port: 80
+      targetPort: 80
     httpsPort:
-      nodePort: 30443
+      port: 443
+      targetPort: 443
   resources:
     requests:
       cpu: 100m
