@@ -3,8 +3,8 @@ repositories:
   - name: nginx-stable
     url: https://helm.nginx.com/stable
 
-  # - name: jetstack
-  #   url: https://charts.jetstack.io
+  - name: jetstack
+    url: https://charts.jetstack.io
 
   # - name: hashicorp
   #   url: https://helm.releases.hashicorp.com
@@ -29,12 +29,12 @@ releases:
     values:
       - values-nginx-ingress.yaml
 
-  # - name: cert-manager
-  #   namespace: cert-manager
-  #   chart: jetstack/cert-manager
-  #   version: 1.20.3
-  #   values:
-  #     - values-cert-manager.yaml
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: 1.21.1
+    values:
+      - values-cert-manager.yaml
 
   # - name: vault
   #   namespace: vault
