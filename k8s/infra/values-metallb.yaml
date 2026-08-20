@@ -1,0 +1,9 @@
+prometheus:
+  serviceMonitor:
+    enabled: false   # temporary value
+controller:
+  resources: {}   # temporary value
+speaker:
+  resources: {}   # temporary value
+frrk8s:
+  enabled: false
