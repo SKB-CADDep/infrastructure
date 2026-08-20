@@ -1,5 +1,8 @@
 ---
 repositories:
+  - name: metallb
+    url: https://metallb.github.io/metallb
+
   - name: nginx-stable
     url: https://helm.nginx.com/stable
 
@@ -22,6 +25,13 @@ repositories:
   #   url: https://prometheus-community.github.io/helm-charts
 
 releases:
+  - name: metallb
+    namespace: metallb
+    chart: metallb/metallb
+    version: 0.16.1
+    values:
+      - values-metallb.yaml
+
   - name: nginx-ingress
     namespace: nginx-ingress
     chart: nginx-stable/nginx-ingress
