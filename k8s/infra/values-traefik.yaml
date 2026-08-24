@@ -1,0 +1,20 @@
+ingressClass:
+  enabled: true
+  name: traefik
+gateway:
+  enabled: false
+gatewayClass:
+  enabled: false
+providers:
+  kubernetesCRD:
+    enabled: false
+  kubernetesIngress:
+    enabled: true
+    ingressClass: traefik
+metrics:
+  prometheus:
+    service:
+      enabled: false   # temporary value
+    serviceMonitor:
+      enabled: false   # temporary value
+resources: {}   # temporary value

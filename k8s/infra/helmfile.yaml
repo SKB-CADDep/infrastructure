@@ -3,6 +3,9 @@ repositories:
   - name: metallb
     url: https://metallb.github.io/metallb
 
+  - name: traefik
+    url: https://traefik.github.io/charts
+
   - name: nginx-stable
     url: https://helm.nginx.com/stable
 
@@ -31,6 +34,13 @@ releases:
     version: 0.16.1
     values:
       - values-metallb.yaml
+
+  - name: traefik
+    namespace: traefik
+    chart: traefik/traefik
+    version: 41.3.0
+    values:
+      - values-traefik.yaml
 
   - name: nginx-ingress
     namespace: nginx-ingress
