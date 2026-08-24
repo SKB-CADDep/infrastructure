@@ -7,9 +7,7 @@ expose:
   ingress:
     hosts:
       core: harbor.local
-    className: nginx
-    annotations:
-      nginx.org/client-max-body-size: "0"
+    className: traefik
 externalURL: https://harbor.local
 harborAdminPassword: admin
 persistence:
