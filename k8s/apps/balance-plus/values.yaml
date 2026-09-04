@@ -1,0 +1,8 @@
+balance-orchestrator:
+  enabled: false
+
+condenser-calculator:
+  enabled: false
+
+valve-stems:
+  enabled: false

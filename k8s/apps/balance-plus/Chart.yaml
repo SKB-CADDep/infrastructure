@@ -1,0 +1,22 @@
+apiVersion: v2
+name: balance-plus
+description: A Helm chart for Balance Plus
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: balance-orchestrator
+    version: 1.0.0
+    repository: "file://charts/balance-orchestrator"
+    condition: balance-orchestrator.enabled
+
+  - name: condenser-calculator
+    version: 1.0.0
+    repository: "file://charts/condenser-calculator"
+    condition: condenser-calculator.enabled
+
+  - name: valve-stems
+    version: 1.0.0
+    repository: "file://charts/valve-stems"
+    condition: valve-stems.enabled

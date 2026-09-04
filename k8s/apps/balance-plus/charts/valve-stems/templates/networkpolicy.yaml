@@ -1,0 +1,10 @@
+{{- if .Values.networkpolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "valve-stems.fullname" . }}
+  labels:
+    {{- include "valve-stems.labels" . | nindent 4 }}
+spec:
+  {{- toYaml .Values.networkpolicy.spec | nindent 2 }}
+{{- end }}
