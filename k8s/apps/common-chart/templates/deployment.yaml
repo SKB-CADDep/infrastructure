@@ -15,6 +15,7 @@ spec:
   selector:
     matchLabels:
       {{- include "common-chart.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: example
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -23,6 +24,7 @@ spec:
       {{- end }}
       labels:
         {{- include "common-chart.labels" . | nindent 8 }}
+        app.kubernetes.io/component: example
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
