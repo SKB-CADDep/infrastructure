@@ -1,0 +1,7 @@
+---
+releases:
+  - name: balance-plus
+    namespace: balance-plus
+    chart: ./balance-plus
+    values:
+      - ./balance-plus/values.yaml
