@@ -1,67 +1,120 @@
-replicaCount: 3
-
-strategy: {}
-
-image:
-  repository: common-chart
-  pullPolicy: IfNotPresent
-  tag: "1.0"
-
-imagePullSecrets: []
-
-nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: balance-orchestrator
 
 serviceAccount:
   create: false
 
-podAnnotations: {}
+frontend:
+  replicaCount: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  image:
+    repository: harbor.local/balance-plus/balance-orchestrator-frontend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 20Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 2
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+  service:
+    type: ClusterIP
+    port: 80
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: balance-orchestrator
+  volumeMounts:
+    - name: nginx-config
+      mountPath: /etc/nginx/conf.d/default.conf
+      subPath: default.conf
 
-podLabels: {}
-
-podSecurityContext: {}
-
-securityContext: {}
-
-topologySpreadConstraints: []
-
-initContainers: []
-
-service:
-  type: ClusterIP
-  port: 80
+backend:
+  replicaCount: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  image:
+    repository: harbor.local/balance-plus/balance-orchestrator-backend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  podSecurityContext: {}
+  securityContext: {}
+  initContainers: []
+  resources: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  service:
+    type: ClusterIP
+    port: 80
+  envFrom:
+    - configMapRef:
+        name: balance-orchestrator
+    - secretRef:
+        name: balance-orchestrator
 
 ingress:
-  enabled: false
-
-resources: {}
-
-envFrom: []
-
-startupProbe: {}
-
-livenessProbe: {}
-
-readinessProbe: {}
-
-autoscaling:
-  enabled: false
-
-volumes: []
-
-volumeMounts: []
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+  enabled: true
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: balance-orchestrator.local
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: balance-orchestrator-frontend
+            port: 80
 
 configmap:
-  enabled: false
+  enabled: true
+  data:
+    GITLAB_URL: "https://gitlab.local"
+    GITLAB_PROJECT_ID: "1"
+    default.conf: |
+      server {
+          listen 80;
+          server_name _;
+          root /usr/share/nginx/html;
+          index index.html;
+
+          location / {
+              try_files $uri $uri/ /index.html;
+          }
+
+          location /api/ {
+              proxy_pass http://balance-orchestrator-backend/api/;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+          }
+      }
 
 secret:
-  enabled: false
+  enabled: true
+  data:
+    GITLAB_PRIVATE_TOKEN: "secret-token"
 
 networkpolicy:
   enabled: false

@@ -1,5 +1,5 @@
 balance-orchestrator:
-  enabled: false
+  enabled: true
 
 condenser-calculator:
   enabled: false
