@@ -27,6 +27,9 @@ topologySpreadConstraints: []
 
 initContainers: []
 
+job:
+  enabled: false
+
 service:
   type: ClusterIP
   port: 80
