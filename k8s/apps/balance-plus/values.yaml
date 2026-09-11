@@ -2,7 +2,7 @@ balance-orchestrator:
   enabled: true
 
 condenser-calculator:
-  enabled: false
+  enabled: true
 
 valve-stems:
   enabled: false
