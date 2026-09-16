@@ -1,67 +1,210 @@
-replicaCount: 3
-
-strategy: {}
-
-image:
-  repository: common-chart
-  pullPolicy: IfNotPresent
-  tag: "1.0"
-
-imagePullSecrets: []
-
-nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: valve-stems
 
 serviceAccount:
   create: false
 
-podAnnotations: {}
+frontend:
+  replicaCount: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  image:
+    repository: harbor.local/balance-plus/valve-stems-frontend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 2
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+  service:
+    type: ClusterIP
+    port: 80
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: valve-stems
+  volumeMounts:
+    - name: nginx-config
+      mountPath: /etc/nginx/conf.d/default.conf
+      subPath: default.conf
 
-podLabels: {}
+backend:
+  replicaCount: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  image:
+    repository: harbor.local/balance-plus/valve-stems-backend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  service:
+    type: ClusterIP
+    port: 80
+  envFrom:
+    - configMapRef:
+        name: valve-stems
+    - secretRef:
+        name: valve-stems
 
-podSecurityContext: {}
+worker:
+  enabled: true
+  image:
+    repository: harbor.local/balance-plus/valve-stems-backend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  replicaCount: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  command:
+    - celery
+  args:
+    - -A
+    - app.core.celery_app.celery_app
+    - worker
+    - --loglevel=info
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  envFrom:
+    - configMapRef:
+        name: valve-stems
+    - secretRef:
+        name: valve-stems
+  imagePullSecrets: []
+  podAnnotations: {}
+  podLabels: {}
+  topologySpreadConstraints: []
+  initContainers: []
+  volumes: []
+  volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
-securityContext: {}
-
-topologySpreadConstraints: []
-
-initContainers: []
-
-service:
-  type: ClusterIP
-  port: 80
+job:
+  enabled: true
+  image:
+    repository: harbor.local/balance-plus/valve-stems-backend
+    pullPolicy: IfNotPresent
+    tag: "1.0"
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+  backoffLimit: 3
+  activeDeadlineSeconds: 300
+  ttlSecondsAfterFinished: null
+  completions: 1
+  parallelism: 1
+  restartPolicy: Never
+  command:
+    - /bin/sh
+    - -c
+  args:
+    - |
+      set -e
+      echo "Applying Alembic migrations..."
+      alembic upgrade head
+  env:
+    - name: POSTGRES_SERVER
+      value: "postgres-postgresql.postgres.svc.cluster.local"
+    - name: POSTGRES_PORT
+      value: "5432"
+    - name: POSTGRES_DB
+      value: "valve_stems"
+    - name: POSTGRES_USER
+      value: "valve"
+    - name: POSTGRES_PASSWORD
+      value: "super-secret-password"
 
 ingress:
-  enabled: false
-
-resources: {}
-
-envFrom: []
-
-startupProbe: {}
-
-livenessProbe: {}
-
-readinessProbe: {}
-
-autoscaling:
-  enabled: false
-
-volumes: []
-
-volumeMounts: []
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+  enabled: true
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: valve-stems.local
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: valve-stems-frontend
+            port: 80
 
 configmap:
-  enabled: false
+  enabled: true
+  data:
+    # ENVIRONMENT: "development"
+    ENVIRONMENT: "staging"
+    LOG_LEVEL: "INFO"
+    PROJECT_NAME: "WSAPropertiesCalculator_Local"
+    BACKEND_CORS_ORIGINS: "http://valve-stems.local"
+    API_V1_STR: "/api/v1"
+    POSTGRES_SERVER: "postgres-postgresql.postgres.svc.cluster.local"
+    POSTGRES_PORT: "5432"
+    POSTGRES_DB: "valve_stems"
+    REDIS_URL: "redis://:admin@redis-master.redis.svc.cluster.local:6379/0"
+    # REDIS_URL: "redis://redis-master.redis.svc.cluster.local"
+    # REDIS_PORT: "6379"
+    # REDIS_PASSWORD: "admin"
+    default.conf: |
+      server {
+          listen 80;
+          server_name _;
+          root /usr/share/nginx/html;
+          index index.html;
+
+          location / {
+              try_files $uri $uri/ /index.html;
+          }
+
+          error_page 404 /index.html;
+
+          location /api/ {
+              proxy_pass http://valve-stems-backend/api/;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+          }
+      }
 
 secret:
-  enabled: false
+  enabled: true
+  data:
+    POSTGRES_USER: "valve"
+    POSTGRES_PASSWORD: "super-secret-password"
 
 networkpolicy:
   enabled: false

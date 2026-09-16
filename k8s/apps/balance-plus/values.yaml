@@ -5,4 +5,4 @@ condenser-calculator:
   enabled: true
 
 valve-stems:
-  enabled: false
+  enabled: true
