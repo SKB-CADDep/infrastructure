@@ -103,16 +103,6 @@ worker:
         name: valve-stems
     - secretRef:
         name: valve-stems
-  imagePullSecrets: []
-  podAnnotations: {}
-  podLabels: {}
-  topologySpreadConstraints: []
-  initContainers: []
-  volumes: []
-  volumeMounts: []
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
 
 job:
   enabled: true
