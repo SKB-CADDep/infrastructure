@@ -59,7 +59,7 @@ backend:
   image:
     repository: harbor.local/balance-plus/condenser-calculator-backend
     pullPolicy: IfNotPresent
-    tag: "1.1"
+    tag: "1.0"
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 1000
@@ -89,7 +89,7 @@ job:
   image:
     repository: harbor.local/balance-plus/condenser-calculator-backend
     pullPolicy: IfNotPresent
-    tag: "1.1"
+    tag: "1.0"
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
