@@ -151,7 +151,7 @@ ingress:
   className: traefik
   annotations: {}
   hosts:
-    - host: valve-stems.local
+    - host: valve-stems.utz.local
       paths:
         - path: /
           pathType: Prefix
@@ -165,7 +165,7 @@ configmap:
     ENVIRONMENT: "staging"
     LOG_LEVEL: "INFO"
     PROJECT_NAME: "WSAPropertiesCalculator_Local"
-    BACKEND_CORS_ORIGINS: "http://valve-stems.local"
+    BACKEND_CORS_ORIGINS: "http://valve-stems.utz.local"
     API_V1_STR: "/api/v1"
     REDIS_URL: "redis://:admin@redis-master.redis.svc.cluster.local:6379/0"
     default.conf: |

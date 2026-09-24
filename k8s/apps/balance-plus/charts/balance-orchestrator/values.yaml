@@ -91,7 +91,7 @@ ingress:
   className: traefik
   annotations: {}
   hosts:
-    - host: balance-orchestrator.local
+    - host: balance-orchestrator.utz.local
       paths:
         - path: /
           pathType: Prefix

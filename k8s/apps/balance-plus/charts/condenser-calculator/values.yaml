@@ -118,7 +118,7 @@ ingress:
   className: traefik
   annotations: {}
   hosts:
-    - host: condenser-calculator.local
+    - host: condenser-calculator.utz.local
       paths:
         - path: /
           pathType: Prefix
