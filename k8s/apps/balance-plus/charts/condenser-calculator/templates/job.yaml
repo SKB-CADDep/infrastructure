@@ -40,7 +40,7 @@ spec:
         {{- end }}
     spec:
       restartPolicy: {{ .Values.job.restartPolicy }}
-      {{- with .Values.job.imagePullSecrets }}
+      {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
