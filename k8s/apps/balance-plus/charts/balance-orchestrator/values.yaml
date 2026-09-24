@@ -83,6 +83,8 @@ backend:
         name: balance-orchestrator
     - secretRef:
         name: balance-orchestrator
+    - secretRef:
+        name: balance-orchestrator-gitlab
 
 ingress:
   enabled: true
@@ -121,9 +123,7 @@ configmap:
       }
 
 secret:
-  enabled: true
-  data:
-    GITLAB_PRIVATE_TOKEN: "secret-token"
+  enabled: false
 
 networkpolicy:
   enabled: false

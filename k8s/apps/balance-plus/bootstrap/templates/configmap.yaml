@@ -1,0 +1,19 @@
+{{- range $name, $service := .Values.services }}
+{{- if $service.enabled }}
+{{- with $service.config }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $service.configMapName }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/part-of: balance-plus
+    app.kubernetes.io/component: database
+data:
+{{- range $key, $value := . }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

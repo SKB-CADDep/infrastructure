@@ -1,7 +1,11 @@
 ---
 releases:
+  - name: balance-plus-bootstrap
+    namespace: balance-plus
+    chart: ./balance-plus/bootstrap
+
   - name: balance-plus
     namespace: balance-plus
     chart: ./balance-plus
-    values:
-      - ./balance-plus/values.yaml
+    needs:
+      - balance-plus/balance-plus-bootstrap

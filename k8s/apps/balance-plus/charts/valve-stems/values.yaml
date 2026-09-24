@@ -81,8 +81,10 @@ backend:
   envFrom:
     - configMapRef:
         name: valve-stems
+    - configMapRef:
+        name: valve-stems-database
     - secretRef:
-        name: valve-stems
+        name: valve-stems-database
 
 worker:
   enabled: true
@@ -111,8 +113,10 @@ worker:
   envFrom:
     - configMapRef:
         name: valve-stems
+    - configMapRef:
+        name: valve-stems-database
     - secretRef:
-        name: valve-stems
+        name: valve-stems-database
 
 job:
   enabled: true
@@ -135,19 +139,12 @@ job:
   args:
     - |
       set -e
-      echo "Applying Alembic migrations..."
       alembic upgrade head
-  env:
-    - name: POSTGRES_SERVER
-      value: "postgres-postgresql.postgres.svc.cluster.local"
-    - name: POSTGRES_PORT
-      value: "5432"
-    - name: POSTGRES_DB
-      value: "valve_stems"
-    - name: POSTGRES_USER
-      value: "valve"
-    - name: POSTGRES_PASSWORD
-      value: "super-secret-password"
+  envFrom:
+    - configMapRef:
+        name: valve-stems-database
+    - secretRef:
+        name: valve-stems-database
 
 ingress:
   enabled: true
@@ -165,19 +162,12 @@ ingress:
 configmap:
   enabled: true
   data:
-    # ENVIRONMENT: "development"
     ENVIRONMENT: "staging"
     LOG_LEVEL: "INFO"
     PROJECT_NAME: "WSAPropertiesCalculator_Local"
     BACKEND_CORS_ORIGINS: "http://valve-stems.local"
     API_V1_STR: "/api/v1"
-    POSTGRES_SERVER: "postgres-postgresql.postgres.svc.cluster.local"
-    POSTGRES_PORT: "5432"
-    POSTGRES_DB: "valve_stems"
     REDIS_URL: "redis://:admin@redis-master.redis.svc.cluster.local:6379/0"
-    # REDIS_URL: "redis://redis-master.redis.svc.cluster.local"
-    # REDIS_PORT: "6379"
-    # REDIS_PASSWORD: "admin"
     default.conf: |
       server {
           listen 80;
@@ -201,10 +191,7 @@ configmap:
       }
 
 secret:
-  enabled: true
-  data:
-    POSTGRES_USER: "valve"
-    POSTGRES_PASSWORD: "super-secret-password"
+  enabled: false
 
 networkpolicy:
   enabled: false

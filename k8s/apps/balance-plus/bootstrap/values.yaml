@@ -1,0 +1,51 @@
+secretStoreRef:
+  name: vault
+  kind: SecretStore
+
+refreshInterval: 1h
+
+services:
+  valve-stems:
+    enabled: true
+    configMapName: valve-stems-database
+    config:
+      POSTGRES_HOST: postgres-postgresql.postgres.svc.cluster.local
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: valve_stems
+    externalSecret:
+      name: valve-stems-database
+      targetName: valve-stems-database
+      remoteKey: apps/balance-plus/dev/valve-stems/database
+      data:
+        - secretKey: POSTGRES_USER
+          property: username
+        - secretKey: POSTGRES_PASSWORD
+          property: password
+
+  condenser-calculator:
+    enabled: true
+    configMapName: condenser-calculator-database
+    config:
+      POSTGRES_HOST: postgres-postgresql.postgres.svc.cluster.local
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: condenser_calculator
+    externalSecret:
+      name: condenser-calculator-database
+      targetName: condenser-calculator-database
+      remoteKey: apps/balance-plus/dev/condenser-calculator/database
+      data:
+        - secretKey: POSTGRES_USER
+          property: username
+        - secretKey: POSTGRES_PASSWORD
+          property: password
+
+  balance-orchestrator:
+    enabled: true
+    externalSecret:
+      name: balance-orchestrator-gitlab
+      component: integration
+      targetName: balance-orchestrator-gitlab
+      remoteKey: apps/balance-plus/shared/gitlab
+      data:
+        - secretKey: GITLAB_PRIVATE_TOKEN
+          property: token

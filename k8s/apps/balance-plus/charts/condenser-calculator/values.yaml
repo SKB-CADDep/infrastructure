@@ -80,9 +80,9 @@ backend:
     port: 80
   envFrom:
     - configMapRef:
-        name: condenser-calculator
+        name: condenser-calculator-database
     - secretRef:
-        name: condenser-calculator
+        name: condenser-calculator-database
 
 job:
   enabled: true
@@ -105,21 +105,13 @@ job:
   args:
     - |
       set -e
-      echo "Applying Alembic migrations..."
       alembic upgrade head
-      echo "Loading reference data..."
       python seed.py
-  env:
-    - name: POSTGRES_SERVER
-      value: "postgres-postgresql.postgres.svc.cluster.local"
-    - name: POSTGRES_PORT
-      value: "5432"
-    - name: POSTGRES_DB
-      value: "condenser_calculator"
-    - name: POSTGRES_USER
-      value: "condenser"
-    - name: POSTGRES_PASSWORD
-      value: "super-secret-password"
+  envFrom:
+    - configMapRef:
+        name: condenser-calculator-database
+    - secretRef:
+        name: condenser-calculator-database
 
 ingress:
   enabled: true
@@ -137,9 +129,6 @@ ingress:
 configmap:
   enabled: true
   data:
-    POSTGRES_SERVER: "postgres-postgresql.postgres.svc.cluster.local"
-    POSTGRES_PORT: "5432"
-    POSTGRES_DB: "condenser_calculator"
     default.conf: |
       server {
           listen 80;
@@ -159,10 +148,7 @@ configmap:
       }
 
 secret:
-  enabled: true
-  data:
-    POSTGRES_USER: "condenser"
-    POSTGRES_PASSWORD: "super-secret-password"
+  enabled: false
 
 networkpolicy:
   enabled: false
