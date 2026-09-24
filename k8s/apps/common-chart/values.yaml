@@ -66,5 +66,8 @@ configmap:
 secret:
   enabled: false
 
+externalSecret:
+  enabled: false
+
 networkpolicy:
   enabled: false

@@ -179,6 +179,22 @@ secret:
   data:
     DB_PASSWORD: "secret-123"
 
+externalSecret:
+  enabled: true
+  spec:
+    refreshInterval: 1h
+    secretStoreRef:
+      name: vault
+      kind: SecretStore
+    target:
+      name: test-app-full
+      creationPolicy: Owner
+    data:
+      - secretKey: DB_PASSWORD
+        remoteRef:
+          key: apps/test-app/database
+          property: password
+
 networkpolicy:
   enabled: true
   spec:
