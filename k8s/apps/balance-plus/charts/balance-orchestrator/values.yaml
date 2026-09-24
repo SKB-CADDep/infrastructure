@@ -125,5 +125,21 @@ configmap:
 secret:
   enabled: false
 
+externalSecret:
+  enabled: true
+  spec:
+    refreshInterval: 1h
+    secretStoreRef:
+      name: vault
+      kind: SecretStore
+    target:
+      name: balance-orchestrator-gitlab
+      creationPolicy: Owner
+    data:
+    - secretKey: GITLAB_PRIVATE_TOKEN
+      remoteRef:
+        key: apps/balance-plus/shared/gitlab
+        property: token
+
 networkpolicy:
   enabled: false
