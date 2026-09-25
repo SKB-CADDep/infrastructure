@@ -1,5 +1,3 @@
-auth:
-  password: admin
 master:
   persistence:
     enabled: false
