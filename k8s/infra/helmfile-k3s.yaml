@@ -1,42 +1,25 @@
 ---
-repositories:
-  - name: hashicorp
-    url: https://helm.releases.hashicorp.com
-
-  - name: external-secrets
-    url: https://charts.external-secrets.io
-
-  - name: bitnami
-    url: https://charts.bitnami.com/bitnami
-
-  - name: harbor
-    url: https://helm.goharbor.io
-
 releases:
   - name: vault
     namespace: vault
-    chart: hashicorp/vault
-    version: 0.32.0
+    chart: ./charts/vault-0.32.0.tgz
     values:
-      - values-vault.yaml
+      - ./values-vault.yaml
 
   - name: external-secrets
     namespace: external-secrets
-    chart: external-secrets/external-secrets
-    version: 2.6.0
+    chart: ./charts/external-secrets-2.6.0.tgz
     values:
-      - values-external-secrets.yaml
+      - ./values-external-secrets.yaml
 
   - name: postgres
     namespace: postgres
-    chart: bitnami/postgresql
-    version: 18.8.8
+    chart: ./charts/postgresql-18.8.8.tgz
     values:
-      - values-postgres.yaml
+      - ./values-postgres.yaml
 
   - name: redis
     namespace: redis
-    chart: bitnami/redis
-    version: 28.0.2
+    chart: ./charts/redis-28.0.2.tgz
     values:
-      - values-redis.yaml
+      - ./values-redis.yaml
