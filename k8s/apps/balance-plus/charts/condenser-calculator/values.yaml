@@ -11,7 +11,7 @@ frontend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/condenser-calculator-frontend
+    repository: cr.utz.ru/construct/condenser-calculator-frontend
     pullPolicy: IfNotPresent
     tag: "1.0"
   resources:
@@ -57,7 +57,7 @@ backend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/condenser-calculator-backend
+    repository: cr.utz.ru/construct/condenser-calculator-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   podSecurityContext:
@@ -87,7 +87,7 @@ backend:
 job:
   enabled: true
   image:
-    repository: harbor.local/balance-plus/condenser-calculator-backend
+    repository: cr.utz.ru/construct/condenser-calculator-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   annotations:

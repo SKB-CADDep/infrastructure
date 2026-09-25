@@ -11,7 +11,7 @@ frontend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/balance-orchestrator-frontend
+    repository: cr.utz.ru/construct/balance-orchestrator-frontend
     pullPolicy: IfNotPresent
     tag: "1.0"
   resources:
@@ -57,7 +57,7 @@ backend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/balance-orchestrator-backend
+    repository: cr.utz.ru/construct/balance-orchestrator-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   podSecurityContext:

@@ -11,7 +11,7 @@ frontend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/valve-stems-frontend
+    repository: cr.utz.ru/construct/valve-stems-frontend
     pullPolicy: IfNotPresent
     tag: "1.0"
   resources:
@@ -57,7 +57,7 @@ backend:
       maxUnavailable: 0
       maxSurge: 1
   image:
-    repository: harbor.local/balance-plus/valve-stems-backend
+    repository: cr.utz.ru/construct/valve-stems-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   podSecurityContext:
@@ -89,7 +89,7 @@ backend:
 worker:
   enabled: true
   image:
-    repository: harbor.local/balance-plus/valve-stems-backend
+    repository: cr.utz.ru/construct/valve-stems-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   replicaCount: 1
@@ -121,7 +121,7 @@ worker:
 job:
   enabled: true
   image:
-    repository: harbor.local/balance-plus/valve-stems-backend
+    repository: cr.utz.ru/construct/valve-stems-backend
     pullPolicy: IfNotPresent
     tag: "1.0"
   annotations:
