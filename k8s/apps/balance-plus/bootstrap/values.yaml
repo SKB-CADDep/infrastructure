@@ -1,6 +1,6 @@
 secretStoreRef:
   name: vault
-  kind: SecretStore
+  kind: ClusterSecretStore
 
 refreshInterval: 1h
 
@@ -9,7 +9,7 @@ services:
     enabled: true
     configMapName: valve-stems-database
     config:
-      POSTGRES_HOST: postgres-postgresql.postgres.svc.cluster.local
+      POSTGRES_SERVER: postgres-postgresql.postgres.svc.cluster.local
       POSTGRES_PORT: "5432"
       POSTGRES_DB: valve_stems
     externalSecret:
@@ -26,7 +26,7 @@ services:
     enabled: true
     configMapName: condenser-calculator-database
     config:
-      POSTGRES_HOST: postgres-postgresql.postgres.svc.cluster.local
+      POSTGRES_SERVER: postgres-postgresql.postgres.svc.cluster.local
       POSTGRES_PORT: "5432"
       POSTGRES_DB: condenser_calculator
     externalSecret:

@@ -82,8 +82,6 @@ backend:
     - configMapRef:
         name: balance-orchestrator
     - secretRef:
-        name: balance-orchestrator
-    - secretRef:
         name: balance-orchestrator-gitlab
 
 ingress:
@@ -131,7 +129,7 @@ externalSecret:
     refreshInterval: 1h
     secretStoreRef:
       name: vault
-      kind: SecretStore
+      kind: ClusterSecretStore
     target:
       name: balance-orchestrator-gitlab
       creationPolicy: Owner

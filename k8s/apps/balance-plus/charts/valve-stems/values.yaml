@@ -167,7 +167,7 @@ configmap:
     PROJECT_NAME: "WSAPropertiesCalculator_Local"
     BACKEND_CORS_ORIGINS: "http://valve-stems.utz.local"
     API_V1_STR: "/api/v1"
-    REDIS_URL: "redis://:admin@redis-master.redis.svc.cluster.local:6379/0"
+    REDIS_URL: "redis://:sasha-12345@redis-master.redis.svc.cluster.local:6379/0"
     default.conf: |
       server {
           listen 80;
