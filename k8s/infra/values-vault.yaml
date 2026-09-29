@@ -9,6 +9,9 @@ server:
   logLevel: info
   logFormat: json
   resources: {}   # temporary value
+  serviceAccount:
+    create: true
+    name: vault
   extraInitContainers:
     - name: fix-volume-permissions
       image: busybox
