@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: redis-auth
+  namespace: redis
+spec:
+  refreshPolicy: CreatedOnce
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: redis-auth
+    creationPolicy: Owner
+  data:
+    - secretKey: password
+      remoteRef:
+        key: infra/redis
+        property: password

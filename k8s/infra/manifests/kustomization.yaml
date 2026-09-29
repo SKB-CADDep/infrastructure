@@ -2,6 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+# ------------------------- Minikube -------------------------
   - harbor/ca.yaml
   - harbor/harbor.yaml
   - metallb/metallb.yaml
+# ------------------------------------------------------------
+  - eso/external-secrets.yaml
+  - eso/postgres.yaml
+  - eso/redis.yaml
