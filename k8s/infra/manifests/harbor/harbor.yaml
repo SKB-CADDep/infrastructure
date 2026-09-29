@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: harbor-tls
   dnsNames:
-    - harbor.local
+    - cr.utz.ru
   issuerRef:
     name: minikube-ca
     kind: ClusterIssuer
