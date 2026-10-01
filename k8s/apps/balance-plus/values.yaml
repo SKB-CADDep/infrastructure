@@ -1,5 +1,6 @@
 global:
-  imagePullSecrets: harbor-pull-secret
+  imagePullSecrets:
+    - name: harbor-pull-secret
 
 balance-orchestrator:
   enabled: true
