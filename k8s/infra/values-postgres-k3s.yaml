@@ -1,0 +1,24 @@
+auth:
+  existingSecret: postgres-auth
+  secretKeys:
+    adminPasswordKey: password
+primary:
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: local-path
+  initContainers:
+    - name: init-script
+      image: busybox
+      command: ["sh", "-c", "mkdir -p /bitnami/postgresql && chown -R 1001:1001 /bitnami/postgresql"]
+      volumeMounts:
+        - name: data
+          mountPath: /bitnami/postgresql
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+service:
+  type: ClusterIP

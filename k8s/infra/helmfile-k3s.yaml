@@ -16,10 +16,10 @@ releases:
     namespace: postgres
     chart: ./charts/postgresql-18.8.8.tgz
     values:
-      - ./values-postgres.yaml
+      - ./values-postgres-k3s.yaml
 
   - name: redis
     namespace: redis
     chart: ./charts/redis-28.0.2.tgz
     values:
-      - ./values-redis.yaml
+      - ./values-redis-k3s.yaml

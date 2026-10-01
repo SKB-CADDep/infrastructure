@@ -1,0 +1,49 @@
+global:
+  enabled: true
+  tlsDisable: true   # temporary value
+  serverTelemetry:
+    prometheusOperator: false   # temporary value
+
+server:
+  enabled: true
+  logLevel: info
+  logFormat: json
+  resources: {}   # temporary value
+  serviceAccount:
+    create: true
+    name: vault
+  extraInitContainers:
+    - name: fix-volume-permissions
+      image: busybox
+      command: ["sh", "-c", "chown -R 100:1000 /vault/data && chmod -R 770 /vault/data"]
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        allowPrivilegeEscalation: false
+      volumeMounts:
+        - name: data
+          mountPath: /vault/data
+  podSecurityContext:
+    fsGroup: 1000
+  securityContext:
+    runAsUser: 100
+    runAsGroup: 1000
+    runAsNonRoot: true
+  dataStorage:
+    enabled: true
+    size: 1Gi
+    storageClass: local-path
+  standalone:
+    enabled: true
+
+ui:
+  enabled: true
+  activeVaultPodOnly: true
+
+serverTelemetry:
+  serviceMonitor:
+    enabled: false   # temporary value
+
+injector:
+  enabled: false
