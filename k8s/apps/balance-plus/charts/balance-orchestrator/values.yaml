@@ -100,8 +100,8 @@ ingress:
 configmap:
   enabled: true
   data:
-    GITLAB_URL: "https://gitlab.local"
-    GITLAB_PROJECT_ID: "1"
+    GITLAB_URL: "http://git.utz.local"
+    GITLAB_PROJECT_ID: "41"
     default.conf: |
       server {
           listen 80;
