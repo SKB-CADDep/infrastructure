@@ -21,6 +21,9 @@ repositories:
   - name: harbor
     url: https://helm.goharbor.io
 
+  - name: headlamp
+    url: https://kubernetes-sigs.github.io/headlamp
+
   # - name: prometheus-community
   #   url: https://prometheus-community.github.io/helm-charts
 
@@ -80,6 +83,13 @@ releases:
     version: 1.19.2
     values:
       - values-harbor.yaml
+
+  - name: headlamp
+    namespace: headlamp
+    chart: headlamp/headlamp
+    version: 0.45.0
+    values:
+      - values-headlamp.yaml
 
   # - name: kube-prometheus-stack
   #   namespace: monitoring

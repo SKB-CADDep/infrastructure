@@ -1,0 +1,32 @@
+config:
+  inCluster: true
+  unsafeUseServiceAccountToken: false
+  oidc:
+    secret:
+      create: false
+
+automountServiceAccountToken: true
+
+serviceAccount:
+  create: true
+  name: headlamp
+
+clusterRoleBinding:
+  create: false
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - host: headlamp.utz.local
+      paths:
+        - path: /
+          type: Prefix
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 96Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi

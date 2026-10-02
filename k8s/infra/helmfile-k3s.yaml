@@ -23,3 +23,9 @@ releases:
     chart: ./charts/redis-28.0.2.tgz
     values:
       - ./values-redis-k3s.yaml
+
+  - name: headlamp
+    namespace: headlamp
+    chart: ./charts/headlamp-0.45.0.tgz
+    values:
+      - ./values-headlamp.yaml

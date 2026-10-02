@@ -10,3 +10,5 @@ resources:
   - eso/external-secrets.yaml
   - eso/postgres.yaml
   - eso/redis.yaml
+  - headlamp/serviceaccount.yaml
+  - headlamp/secret.yaml
