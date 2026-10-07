@@ -4,7 +4,7 @@ releases:
     namespace: vault
     chart: ./charts/vault-0.32.0.tgz
     values:
-      - ./values-vault.yaml
+      - ./values-vault-k3s.yaml
 
   - name: external-secrets
     namespace: external-secrets
@@ -22,7 +22,7 @@ releases:
     namespace: redis
     chart: ./charts/redis-28.0.2.tgz
     values:
-      - ./values-redis-k3s.yaml
+      - ./values-redis.yaml
 
   - name: headlamp
     namespace: headlamp
