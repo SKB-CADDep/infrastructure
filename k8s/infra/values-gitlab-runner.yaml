@@ -1,0 +1,38 @@
+gitlabUrl: https://gitlab.com
+
+replicas: 1
+
+concurrent: 3
+
+rbac:
+  create: true
+  clusterWideAccess: false
+
+serviceAccount:
+  create: true
+  name: gitlab-runner
+
+metrics:
+  enabled: false     # temporary value
+  podMonitor:
+    enabled: false   # temporary value
+
+runners:
+  secret: gitlab-runner-token
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{ .Release.Namespace }}"
+        image = "alpine:3.24"
+        cpu_request = "100m"
+        memory_request = "512Mi"
+        cpu_limit = "1"
+        memory_limit = "2Gi"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi

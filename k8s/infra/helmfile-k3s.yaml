@@ -29,3 +29,9 @@ releases:
     chart: ./charts/headlamp-0.45.0.tgz
     values:
       - ./values-headlamp.yaml
+
+  - name: gitlab-runner
+    namespace: gitlab-runner
+    chart: ./charts/gitlab-runner-0.93.0.tgz
+    values:
+      - ./values-gitlab-runner.yaml
