@@ -35,3 +35,9 @@ releases:
     chart: ./charts/gitlab-runner-0.93.0.tgz
     values:
       - ./values-gitlab-runner.yaml
+
+  - name: kube-prometheus-stack
+    namespace: monitoring
+    chart: ./charts/kube-prometheus-stack-88.3.0.tgz
+    values:
+      - ./values-kube-prometheus-stack-k3s.yaml
