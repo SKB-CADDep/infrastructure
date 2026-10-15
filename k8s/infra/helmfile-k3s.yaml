@@ -41,3 +41,15 @@ releases:
     chart: ./charts/kube-prometheus-stack-88.3.0.tgz
     values:
       - ./values-kube-prometheus-stack-k3s.yaml
+
+  - name: loki
+    namespace: monitoring
+    chart: ./charts/loki-18.15.1.tgz
+    values:
+      - ./values-loki-k3s.yaml
+
+  - name: alloy
+    namespace: monitoring
+    chart: ./charts/alloy-1.13.1.tgz
+    values:
+      - ./values-alloy.yaml
