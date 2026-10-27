@@ -53,3 +53,9 @@ releases:
     chart: ./charts/alloy-1.13.1.tgz
     values:
       - ./values-alloy.yaml
+
+  - name: argocd
+    namespace: argocd
+    chart: ./charts/argo-cd-10.10.5.tgz
+    values:
+      - ./values-argocd.yaml

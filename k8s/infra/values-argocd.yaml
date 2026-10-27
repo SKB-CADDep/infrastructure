@@ -1,0 +1,90 @@
+global:
+  domain: argo-cd.utz.local
+
+configs:
+  cm:
+    admin.enabled: true
+    exec.enabled: false
+  params:
+    server.insecure: true
+
+controller:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
+
+dex:
+  enabled: false
+
+redis:
+  enabled: false
+
+externalRedis:
+  host: redis-master.redis.svc.cluster.local
+  password: sasha-12345
+
+redisSecretInit:
+  enabled: false
+
+server:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hostname: argo-cd.utz.local
+
+repoServer:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
+
+applicationSet:
+  replicas: 0
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
+
+notifications:
+  enabled: false
