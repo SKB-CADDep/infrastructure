@@ -1,0 +1,106 @@
+fullnameOverride: turbo-gant
+nameOverride: ""
+
+global:
+  imagePullSecrets:
+    - name: harbor-pull-secret
+
+imagePullSecrets: []
+
+replicaCount: 1
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+image:
+  repository: cr.utz.ru/construct/turbo-gant
+  pullPolicy: IfNotPresent
+  tag: "1.0"
+
+serviceAccount:
+  create: false
+  automount: false
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+
+command: []
+args: []
+env: []
+envFrom:
+  - configMapRef:
+      name: turbo-gant-database
+  - secretRef:
+      name: turbo-gant-database
+
+startupProbe: {}
+livenessProbe: {}
+readinessProbe: {}
+resources: {}
+
+topologySpreadConstraints: []
+initContainers: []
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+job:
+  enabled: true
+  image: {}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+  backoffLimit: 3
+  activeDeadlineSeconds: 300
+  ttlSecondsAfterFinished: null
+  completions: 1
+  parallelism: 1
+  restartPolicy: Never
+  serviceAccountName: default
+  automountServiceAccountToken: false
+  command:
+    - alembic
+    - upgrade
+    - head
+  args: []
+  env: []
+  envFrom:
+    - configMapRef:
+        name: turbo-gant-database
+    - secretRef:
+        name: turbo-gant-database
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  topologySpreadConstraints: []
+  initContainers: []
+  volumes: []
+  volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+ingress:
+  enabled: true
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: turbo-gant.utz.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []

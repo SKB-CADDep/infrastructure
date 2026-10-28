@@ -5,3 +5,5 @@ kubectl exec -it -n vault vault-0 -- env VAULT_ADDR=http://127.0.0.1:8200 vault 
 kubectl exec -it -n vault vault-0 -- env VAULT_ADDR=http://127.0.0.1:8200 vault operator unseal
 
 kubectl exec -it -n vault vault-0 -- env VAULT_ADDR=http://127.0.0.1:8200 vault login
+
+kubectl exec -i -n vault vault-0 -- vault policy write external-secrets - < external-secrets.hcl

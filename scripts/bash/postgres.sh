@@ -23,3 +23,11 @@ CREATE DATABASE condenser_calculator OWNER condenser;
 psql -U condenser -d condenser_calculator -W
 GRANT ALL ON SCHEMA public TO condenser;
 \q
+
+psql -U postgres
+CREATE USER graphic WITH LOGIN PASSWORD 'super-secret-password';
+CREATE DATABASE mvp_graphics OWNER graphic;
+\q
+psql -U graphic -d mvp_graphics -W
+GRANT ALL ON SCHEMA public TO graphic;
+\q

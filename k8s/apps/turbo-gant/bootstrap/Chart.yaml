@@ -1,0 +1,6 @@
+apiVersion: v2
+name: turbo-gant-bootstrap
+description: Prerequisite database resources for Turbo Gant
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

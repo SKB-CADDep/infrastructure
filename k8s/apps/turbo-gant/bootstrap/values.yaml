@@ -1,0 +1,27 @@
+secretStoreRef:
+  name: vault
+  kind: ClusterSecretStore
+
+refreshInterval: 1h
+
+database:
+  host: postgres-postgresql.postgres.svc.cluster.local
+  port: 5432
+
+configMapName: turbo-gant-database
+config:
+  POSTGRES_USER: graphic
+  POSTGRES_DB: mvp_graphics
+  ADMIN_LOGIN: admin
+
+externalSecret:
+  name: turbo-gant-database
+  targetName: turbo-gant-database
+  remoteKey: apps/turbo-gant/dev/database
+  data:
+    - secretKey: POSTGRES_PASSWORD
+      property: POSTGRES_PASSWORD
+    - secretKey: ADMIN_PASSWORD
+      property: ADMIN_PASSWORD
+    - secretKey: SECRET_KEY
+      property: SECRET_KEY

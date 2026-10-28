@@ -9,3 +9,13 @@ releases:
     chart: ./balance-plus
     needs:
       - balance-plus/balance-plus-bootstrap
+
+  # - name: turbo-gant-bootstrap
+  #   namespace: turbo-gant
+  #   chart: ./turbo-gant/bootstrap
+
+  - name: turbo-gant
+    namespace: turbo-gant
+    chart: ./turbo-gant
+    # needs:
+    #   - turbo-gant/turbo-gant-bootstrap
