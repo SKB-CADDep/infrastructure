@@ -39,7 +39,7 @@ grafana:
     enabled: true
     ingressClassName: traefik
     hosts:
-      - grafana.utz.local
+      - grafana.k3s-t1.utz.local
   persistence:
     enabled: true
     type: pvc
