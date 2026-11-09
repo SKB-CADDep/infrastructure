@@ -19,3 +19,7 @@ releases:
     chart: ./turbo-gant
     # needs:
     #   - turbo-gant/turbo-gant-bootstrap
+
+  # - name: windchill-collector
+  #   namespace: windchill-collector
+  #   chart: ./windchill-collector

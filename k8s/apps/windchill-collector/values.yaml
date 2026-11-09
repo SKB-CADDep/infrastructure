@@ -1,0 +1,49 @@
+fullnameOverride: windchill-collector
+
+global:
+  imagePullSecrets:
+    - name: harbor-pull-secret
+
+replicaCount: 1
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+image:
+  repository: cr.utz.ru/construct/windchill-collector
+  pullPolicy: IfNotPresent
+  tag: "1.0"
+
+serviceAccount:
+  create: false
+
+podSecurityContext: {}
+securityContext: {}
+
+livenessProbe: {}
+readinessProbe: {}
+
+resources: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: windchill-collector.utz.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+configmap:
+  enabled: true
+  data:
+    WINDCHILL_URL: https://windchill.example.local
+    LOG_LEVEL: info
