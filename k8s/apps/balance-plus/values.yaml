@@ -4,9 +4,36 @@ global:
 
 balance-orchestrator:
   enabled: true
+  frontend:
+    image:
+      tag: "1.0"
+  backend:
+    image:
+      tag: "1.0"
 
 condenser-calculator:
   enabled: true
+  frontend:
+    image:
+      tag: "1.0"
+  backend:
+    image:
+      tag: "1.0"
+  job:
+    image:
+      tag: "1.0"
 
 valve-stems:
   enabled: true
+  frontend:
+    image:
+      tag: "1.0"
+  backend:
+    image:
+      tag: "1.0"
+  worker:
+    image:
+      tag: "1.0"
+  job:
+    image:
+      tag: "1.0"

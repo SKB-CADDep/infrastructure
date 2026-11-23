@@ -13,7 +13,6 @@ frontend:
   image:
     repository: cr.utz.ru/construct/condenser-calculator-frontend
     pullPolicy: IfNotPresent
-    tag: "1.0"
   resources:
     requests:
       cpu: 10m
@@ -59,7 +58,6 @@ backend:
   image:
     repository: cr.utz.ru/construct/condenser-calculator-backend
     pullPolicy: IfNotPresent
-    tag: "1.0"
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 1000
@@ -89,7 +87,6 @@ job:
   image:
     repository: cr.utz.ru/construct/condenser-calculator-backend
     pullPolicy: IfNotPresent
-    tag: "1.0"
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded

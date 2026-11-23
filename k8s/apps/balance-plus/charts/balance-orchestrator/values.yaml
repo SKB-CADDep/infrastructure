@@ -13,7 +13,6 @@ frontend:
   image:
     repository: cr.utz.ru/construct/balance-orchestrator-frontend
     pullPolicy: IfNotPresent
-    tag: "1.0"
   resources:
     requests:
       cpu: 10m
@@ -59,7 +58,6 @@ backend:
   image:
     repository: cr.utz.ru/construct/balance-orchestrator-backend
     pullPolicy: IfNotPresent
-    tag: "1.0"
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 1000
