@@ -1,11 +1,8 @@
 fullnameOverride: turbo-gant
-nameOverride: ""
 
 global:
   imagePullSecrets:
     - name: harbor-pull-secret
-
-imagePullSecrets: []
 
 replicaCount: 1
 strategy:
@@ -21,36 +18,16 @@ image:
 
 serviceAccount:
   create: false
-  automount: false
-  annotations: {}
-  name: ""
 
-podAnnotations: {}
-podLabels: {}
-podSecurityContext: {}
-securityContext: {}
-
-command: []
-args: []
-env: []
 envFrom:
   - configMapRef:
       name: turbo-gant-database
   - secretRef:
       name: turbo-gant-database
 
-startupProbe: {}
 livenessProbe: {}
 readinessProbe: {}
 resources: {}
-
-topologySpreadConstraints: []
-initContainers: []
-volumes: []
-volumeMounts: []
-nodeSelector: {}
-tolerations: []
-affinity: {}
 
 service:
   type: ClusterIP
@@ -74,25 +51,11 @@ job:
     - alembic
     - upgrade
     - head
-  args: []
-  env: []
   envFrom:
     - configMapRef:
         name: turbo-gant-database
     - secretRef:
         name: turbo-gant-database
-  podAnnotations: {}
-  podLabels: {}
-  podSecurityContext: {}
-  securityContext: {}
-  resources: {}
-  topologySpreadConstraints: []
-  initContainers: []
-  volumes: []
-  volumeMounts: []
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
 
 ingress:
   enabled: true
@@ -103,4 +66,3 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-  tls: []
