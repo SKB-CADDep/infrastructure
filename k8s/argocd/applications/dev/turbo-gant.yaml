@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: turbo-gant-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/SKB-CADDep/Platform/infrastructure.git
+    targetRevision: main
+    path: k8s/apps/turbo-gant
+    helm:
+      releaseName: turbo-gant
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: turbo-gant
+  syncPolicy:
+    automated:
+      enabled: false
+      prune: false
+      selfHeal: false
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=false
+      - FailOnSharedResource=true
