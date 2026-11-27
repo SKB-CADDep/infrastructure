@@ -18,6 +18,7 @@ image:
 
 serviceAccount:
   create: false
+  automount: false
 
 envFrom:
   - configMapRef:
@@ -33,29 +34,32 @@ service:
   type: ClusterIP
   port: 80
 
-job:
+configMap:
   enabled: true
-  image: {}
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  backoffLimit: 3
-  activeDeadlineSeconds: 300
-  ttlSecondsAfterFinished: null
-  completions: 1
-  parallelism: 1
-  restartPolicy: Never
-  serviceAccountName: default
-  automountServiceAccountToken: false
-  command:
-    - alembic
-    - upgrade
-    - head
-  envFrom:
-    - configMapRef:
-        name: turbo-gant-database
-    - secretRef:
-        name: turbo-gant-database
+  name: "turbo-gant-database"
+  data:
+    POSTGRES_USER: graphic
+    POSTGRES_DB: mvp_graphics
+    ADMIN_LOGIN: admin
+
+externalSecret:
+  enabled: true
+  name: "turbo-gant-database"
+  targetName: "turbo-gant-database"
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  remoteKey: apps/turbo-gant/dev/database
+  data:
+    - secretKey: POSTGRES_PASSWORD
+      property: POSTGRES_PASSWORD
+    - secretKey: ADMIN_PASSWORD
+      property: ADMIN_PASSWORD
+    - secretKey: SECRET_KEY
+      property: SECRET_KEY
+    - secretKey: DATABASE_URL
+      property: DATABASE_URL
 
 ingress:
   enabled: true

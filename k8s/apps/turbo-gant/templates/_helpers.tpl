@@ -60,3 +60,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Name of the database ConfigMap
+*/}}
+{{- define "turbo-gant.configMapName" -}}
+{{- default (printf "%s-database" (include "turbo-gant.fullname" .)) .Values.configMap.name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Name of the database ExternalSecret and its target Secret
+*/}}
+{{- define "turbo-gant.externalSecretName" -}}
+{{- default (printf "%s-database" (include "turbo-gant.fullname" .)) .Values.externalSecret.name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{- define "turbo-gant.externalSecretTargetName" -}}
+{{- default (include "turbo-gant.externalSecretName" .) .Values.externalSecret.targetName }}
+{{- end }}
