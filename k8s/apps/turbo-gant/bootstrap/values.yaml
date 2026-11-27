@@ -25,3 +25,5 @@ externalSecret:
       property: ADMIN_PASSWORD
     - secretKey: SECRET_KEY
       property: SECRET_KEY
+    - secretKey: DATABASE_URL
+      property: DATABASE_URL
